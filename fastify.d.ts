@@ -98,6 +98,7 @@ export type FastifyServerOptions<
   connectionTimeout?: number,
   keepAliveTimeout?: number,
   maxRequestsPerSocket?: number,
+  forceCloseConnections?: boolean,
   requestTimeout?: number,
   pluginTimeout?: number,
   bodyLimit?: number,
@@ -144,7 +145,7 @@ export type FastifyServerOptions<
   return503OnClosing?: boolean,
   ajv?: {
     customOptions?: AjvOptions,
-    plugins?: Function[]
+    plugins?: (Function | [Function, unknown])[]
   },
   frameworkErrors?: <RequestGeneric extends RequestGenericInterface = RequestGenericInterface>(
     error: FastifyError,

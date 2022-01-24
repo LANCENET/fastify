@@ -57,6 +57,7 @@ fastify({ http2: true, https: {} }).inject({}, lightMyRequestCallback)
 expectAssignable<FastifyInstance<http2.Http2Server, http2.Http2ServerRequest, http2.Http2ServerResponse>>(fastify({ http2: true }))
 expectAssignable<FastifyInstance>(fastify({ ignoreTrailingSlash: true }))
 expectAssignable<FastifyInstance>(fastify({ connectionTimeout: 1000 }))
+expectAssignable<FastifyInstance>(fastify({ forceCloseConnections: true }))
 expectAssignable<FastifyInstance>(fastify({ keepAliveTimeout: 1000 }))
 expectAssignable<FastifyInstance>(fastify({ pluginTimeout: 1000 }))
 expectAssignable<FastifyInstance>(fastify({ bodyLimit: 100 }))
@@ -176,6 +177,22 @@ expectAssignable<FastifyInstance>(fastify({
       nullable: false
     },
     plugins: [() => { }]
+  }
+}))
+expectAssignable<FastifyInstance>(fastify({
+  ajv: {
+    customOptions: {
+      nullable: false
+    },
+    plugins: [[() => { }, 'keyword']]
+  }
+}))
+expectAssignable<FastifyInstance>(fastify({
+  ajv: {
+    customOptions: {
+      nullable: false
+    },
+    plugins: [[() => { }, ['keyword1', 'keyword2']]]
   }
 }))
 expectAssignable<FastifyInstance>(fastify({ frameworkErrors: () => { } }))
