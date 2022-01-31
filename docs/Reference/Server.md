@@ -13,6 +13,7 @@ describes the properties available in that options object.
   - [`https`](#https)
   - [`connectionTimeout`](#connectiontimeout)
   - [`keepAliveTimeout`](#keepalivetimeout)
+  - [`forceCloseConnections`](#forcecloseconnections)
   - [`maxRequestsPerSocket`](#maxrequestspersocket)
   - [`requestTimeout`](#requesttimeout)
   - [`ignoreTrailingSlash`](#ignoretrailingslash)
@@ -124,6 +125,19 @@ use. Also, when `serverFactory` option is specified, this option is ignored.
 
 + Default: `5000` (5 seconds)
 
+### `forceCloseConnections`
+<a id="forcecloseconnections"></a>
+
+When set to `true` requests with the header `connection: keep-alive` will be
+tracked by the server. Upon [`close`](#close), the server will iterate the
+current persistent connections and [destroy their
+sockets](https://nodejs.org/dist/latest-v16.x/docs/api/net.html#socketdestroyerror).
+This means the server will shutdown immediately instead of waiting for existing
+persistent connections to timeout first. Important: connections are not
+inspected to determine if requests have been completed.
+
++ Default: `false`
+
 ### `maxRequestsPerSocket`
 <a id="factory-max-requests-per-socket"></a>
 
@@ -207,7 +221,7 @@ Defines the maximum payload, in bytes, the server is allowed to accept.
 Defines what action the framework must take when parsing a JSON object with
 `__proto__`. This functionality is provided by
 [secure-json-parse](https://github.com/fastify/secure-json-parse). See
-https://hueniverse.com/a-tale-of-prototype-poisoning-2610fa170061 for more
+[Prototype Poisoning](../Guides/Prototype-Poisoning.md) for more
 details about prototype poisoning attacks.
 
 Possible values are `'error'`, `'remove'` and `'ignore'`.
@@ -220,7 +234,7 @@ Possible values are `'error'`, `'remove'` and `'ignore'`.
 Defines what action the framework must take when parsing a JSON object with
 `constructor`. This functionality is provided by
 [secure-json-parse](https://github.com/fastify/secure-json-parse). See
-https://hueniverse.com/a-tale-of-prototype-poisoning-2610fa170061 for more
+[Prototype Poisoning](../Guides/Prototype-Poisoning.md) for more
 details about prototype poisoning attacks.
 
 Possible values are `'error'`, `'remove'` and `'ignore'`.
